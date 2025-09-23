@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>OAuth2 소셜 로그인</title>
+</head>
+<body>
+<h1>Spring Boot 소셜 로그인</h1>
+
+<div th:if="${userName == null}">
+    <p>로그인하여 서비스를 이용해보세요.</p>
+    <a href="/oauth2/authorization/google" role="button">
+        Google 로그인
+    </a>
+    <a href="/oauth2/authorization/kakao" role="button">
+        Kakao 로그인
+    </a>
+</div>
+
+<div th:if="${userName != null}">
+    <p>로그인 된 사용자: <span th:text="${userName}"></span></p>
+    <a href="/logout" role="button">로그아웃</a>
+</div>
+</body>
+</html>
