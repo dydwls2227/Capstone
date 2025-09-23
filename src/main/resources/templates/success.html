@@ -1,29 +1,13 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>Login Success</title>
-    <style>
-        body { font-family: sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; background-color: #f4f4f9; }
-        .profile-card { background-color: white; padding: 40px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); text-align: center; }
-        .profile-img { width: 100px; height: 100px; border-radius: 50%; object-fit: cover; margin-bottom: 20px; }
-        h1 { margin-bottom: 10px; }
-        p { color: #555; }
-        a { display: inline-block; margin-top: 20px; padding: 10px 20px; background-color: #007bff; color: white; text-decoration: none; border-radius: 5px; }
-    </style>
+    <title>로그인 성공</title>
 </head>
 <body>
-<div th:if="${user}" class="profile-card">
-    <img th:src="${user.picture}" alt="Profile Picture" class="profile-img">
-    <h1>로그인 성공!</h1>
-    <p>환영합니다, <strong th:text="${user.name}">사용자 이름</strong>님!</p>
-    <p th:text="${user.email}">사용자 이메일</p>
-    <a href="/logout">로그아웃</a>
-</div>
-
-<div th:unless="${user}">
-    <h1>세션 정보가 없습니다.</h1>
-    <a href="/">메인으로 돌아가기</a>
-</div>
+<h1>로그인 성공!</h1>
+<p>이름: <span th:text="${name}">이름</span></p>
+<p>이메일: <span th:text="${email}">이메일</span></p>
+<a href="/">홈으로</a>
 </body>
 </html>

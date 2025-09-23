@@ -18,23 +18,16 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(csrf -> csrf.disable())
-                .headers(headers -> headers.frameOptions(frameOptions -> frameOptions.disable())) // h2-console 화면을 사용하기 위함
-                .authorizeHttpRequests(authorize -> authorize
-                        // 권한 관리 대상 지정
-                        .requestMatchers("/", "/css/**", "/images/**", "/js/**", "/h2-console/**", "/success").permitAll()
-                        .requestMatchers("/api/v1/**").hasRole("USER")
+                .csrf().disable()
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/", "/css/**", "/images/**", "/js/**").permitAll()
                         .anyRequest().authenticated()
                 )
-                .logout(logout -> logout
-                        .logoutSuccessUrl("/")
-                )
-                .oauth2Login(oauth2 -> oauth2
-                        .loginPage("/login")
-                        .defaultSuccessUrl("/success")
-                        .userInfoEndpoint(userInfo -> userInfo
-                                .userService(customOAuth2UserService)
-                        )
+                .logout(logout -> logout.logoutSuccessUrl("/"))
+                .oauth2Login(oauth -> oauth
+                        .loginPage("/")
+                        .userInfoEndpoint(userInfo -> userInfo.userService(customOAuth2UserService))
+                        .defaultSuccessUrl("/success", true)
                 );
 
         return http.build();

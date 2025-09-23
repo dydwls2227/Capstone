@@ -36,6 +36,7 @@ public class OAuthAttributes {
                 .email((String) attributes.get("email"))
                 .picture((String) attributes.get("picture"))
                 .nameAttributeKey(userNameAttributeName)
+                .attributes(attributes)
                 .build();
     }
 
@@ -48,6 +49,7 @@ public class OAuthAttributes {
                 .email((String) kakaoAccount.get("email"))
                 .picture((String) kakaoProfile.get("profile_image_url"))
                 .nameAttributeKey(userNameAttributeName)
+                .attributes(attributes)
                 .build();
     }
 
