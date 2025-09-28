@@ -23,7 +23,7 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/", "/css/**", "/images/**", "/js/**").permitAll()
+                        .requestMatchers("/", "/css/**", "/images/**", "/js/**","/swagger-ui/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .logout(logout -> logout.logoutSuccessUrl("/"))
@@ -39,6 +39,8 @@ public class SecurityConfig {
                             User user = userRepository.findByEmail(attributes.getEmail()).orElseThrow(() -> new IllegalArgumentException("해당 이메일이 존재하지 않습니다."));
 
                             String token = jwtTokenProvider.createToken(user.getId().toString(), user.getRoleKey());
+
+                            System.out.println("### Issued JWT Token: " + token);
 
                             response.sendRedirect("/success");
                         })

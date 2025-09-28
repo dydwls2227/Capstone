@@ -8,15 +8,13 @@
     import org.springframework.stereotype.Controller;
     import org.springframework.ui.Model;
     import org.springframework.web.bind.annotation.GetMapping;
+    import org.springframework.web.bind.annotation.RestController;
 
-    import java.util.Map;
 
     @Controller
     @RequiredArgsConstructor
     public class IndexController {
 
-        private final UserRepository userRepository;
-        private final JwtTokenProvider jwtTokenProvider;
 
         @GetMapping("/")
         public String index() {
