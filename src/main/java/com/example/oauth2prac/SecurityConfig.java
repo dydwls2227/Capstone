@@ -40,8 +40,6 @@ public class SecurityConfig {
 
                             String token = jwtTokenProvider.createToken(user.getId().toString(), user.getRoleKey());
 
-                            System.out.println("### Issued JWT Token: " + token);
-
                             response.sendRedirect("/success");
                         })
                 );
