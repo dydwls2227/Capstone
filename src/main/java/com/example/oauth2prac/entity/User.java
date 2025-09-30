@@ -29,12 +29,20 @@ public class User {
     @Column(nullable = false)
     private Role role;
 
+    @Column
+    private String refreshToken;
+
     @Builder
     public User(String name, String email, String picture, Role role) {
         this.name = name;
         this.email = email;
         this.picture = picture;
         this.role = role;
+    }
+
+    public User updateRefreshToken(String refreshToken) {
+        this.refreshToken = refreshToken;
+        return this;
     }
 
     public User update(String name, String picture){
