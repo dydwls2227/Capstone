@@ -2,6 +2,8 @@ package com.example.oauth2prac.entity;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
+import jakarta.annotation.PostConstruct;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.oauth2.jwt.JwtException;
 import org.springframework.stereotype.Component;
 
@@ -10,12 +12,17 @@ import java.security.Key;
 import java.util.Date;
 
 @Component
+
 public class JwtTokenProvider {
 
     private static final long ACCESS_TOKEN_VALIDITY = 1000L*60*60;
     private static final long REFRESH_TOKEN_VALIDITY = 1000*60*60*24*14;
 
-    private final Key key = Keys.hmacShaKeyFor("01234567890123456789012345678901".getBytes(StandardCharsets.UTF_8));
+    private final Key key;
+
+    public JwtTokenProvider(@Value("${jwt.secret}") String secret) {
+        this.key = Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
+    }
 
 
     public String createToken(String userId, String role) {
@@ -47,10 +54,31 @@ public class JwtTokenProvider {
     }
 
     public String getUserId(String token) {
-        return Jwts.parser()
+        return Jwts.parserBuilder()
                 .setSigningKey(key)
+                .build()
                 .parseClaimsJws(token)
                 .getBody()
                 .getSubject();
+    }
+
+    public String getRole(String token) {
+        return Jwts.parserBuilder()
+                .setSigningKey(key)
+                .build()
+                .parseClaimsJws(token)
+                .getBody()
+                .get("role").toString();
+    }
+
+    public String reissue(String refreshToken) {
+        if(!validateToken(refreshToken)) {
+            throw new JwtException("Invalid refresh token");
+        }
+
+        String userId = getUserId(refreshToken);
+        String role = getRole(refreshToken);
+
+        return createToken(userId, role);
     }
 }

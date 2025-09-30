@@ -11,3 +11,7 @@ spring:
         format_sql: true
   profiles:
     include: oauth
+
+jwt:
+  secret: "my-super-long-secret-key-that-is-at-least-32-characters"
+

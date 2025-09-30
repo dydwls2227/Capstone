@@ -1,6 +1,7 @@
 package com.example.oauth2prac;
 
 import com.example.oauth2prac.entity.*;
+import jakarta.servlet.http.Cookie;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,9 +18,10 @@ public class SecurityConfig {
 
     private final CustomOAuth2UserService customOAuth2UserService;
     private final UserRepository userRepository;
+    private final JwtTokenProvider jwtTokenProvider;
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http, JwtTokenProvider jwtTokenProvider) throws Exception {
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
@@ -39,6 +41,16 @@ public class SecurityConfig {
                             User user = userRepository.findByEmail(attributes.getEmail()).orElseThrow(() -> new IllegalArgumentException("해당 이메일이 존재하지 않습니다."));
 
                             String token = jwtTokenProvider.createToken(user.getId().toString(), user.getRoleKey());
+                            String refreshToken = jwtTokenProvider.createRefreshToken(user.getId().toString());
+
+                            user.updateRefreshToken(refreshToken);
+                            userRepository.save(user);
+
+                            Cookie cookie = new Cookie("accessToken", token);
+                            cookie.setHttpOnly(true);
+                            cookie.setPath("/");
+                            cookie.setMaxAge(60 * 60);
+                            response.addCookie(cookie);
 
                             response.sendRedirect("/success");
                         })
