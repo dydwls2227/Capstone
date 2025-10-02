@@ -1,5 +1,6 @@
-package com.example.oauth2prac.entity;
+package com.example.oauth2prac.repository;
 
+import com.example.oauth2prac.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

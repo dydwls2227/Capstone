@@ -1,9 +1,10 @@
-package com.example.oauth2prac.entity;
+package com.example.oauth2prac.config.oauth2;
 
+import com.example.oauth2prac.entity.Role;
+import com.example.oauth2prac.entity.User;
 import lombok.Builder;
 import lombok.Getter;
 
-import java.util.HashMap;
 import java.util.Map;
 
 @Getter

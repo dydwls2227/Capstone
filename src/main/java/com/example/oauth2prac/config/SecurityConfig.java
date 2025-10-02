@@ -1,6 +1,9 @@
-package com.example.oauth2prac;
+package com.example.oauth2prac.config;
 
+import com.example.oauth2prac.config.oauth2.OAuthAttributes;
 import com.example.oauth2prac.entity.*;
+import com.example.oauth2prac.repository.UserRepository;
+import com.example.oauth2prac.service.CustomOAuth2UserService;
 import jakarta.servlet.http.Cookie;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -43,6 +46,16 @@ public class SecurityConfig {
                             String token = jwtTokenProvider.createToken(user.getId().toString(), user.getRoleKey());
                             String refreshToken = jwtTokenProvider.createRefreshToken(user.getId().toString());
 
+                            String oauthId = attributes.getNameAttributeKey();
+
+                            if(oauthId.equals("id")){
+                                oauthId = "kakao";
+                            }
+                            else {
+                                oauthId = "Google";
+                            }
+
+                            user.setOauthId(oauthId);
                             user.updateRefreshToken(refreshToken);
                             userRepository.save(user);
 

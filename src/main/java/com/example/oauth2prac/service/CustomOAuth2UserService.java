@@ -1,5 +1,8 @@
-    package com.example.oauth2prac.entity;
+    package com.example.oauth2prac.service;
 
+    import com.example.oauth2prac.config.oauth2.OAuthAttributes;
+    import com.example.oauth2prac.entity.User;
+    import com.example.oauth2prac.repository.UserRepository;
     import lombok.RequiredArgsConstructor;
     import org.springframework.security.core.authority.SimpleGrantedAuthority;
     import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
