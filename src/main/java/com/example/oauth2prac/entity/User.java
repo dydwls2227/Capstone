@@ -1,13 +1,14 @@
 package com.example.oauth2prac.entity;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
+@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "users")
 public class User {
@@ -30,7 +31,16 @@ public class User {
     private Role role;
 
     @Column
+    private String oauthId;
+
+    @Column
     private String refreshToken;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<OriginalImage> OriginalImages = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<SegmentedImage> segmentedImages = new ArrayList<>();
 
     @Builder
     public User(String name, String email, String picture, Role role) {
