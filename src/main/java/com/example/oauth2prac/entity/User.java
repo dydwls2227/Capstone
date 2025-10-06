@@ -3,6 +3,9 @@ package com.example.oauth2prac.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Getter
 @Setter
@@ -32,6 +35,12 @@ public class User {
 
     @Column
     private String refreshToken;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<OriginalImage> OriginalImages = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<SegmentedImage> segmentedImages = new ArrayList<>();
 
     @Builder
     public User(String name, String email, String picture, Role role) {
