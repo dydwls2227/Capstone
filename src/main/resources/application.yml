@@ -17,11 +17,6 @@ spring:
   profiles:
     include: oauth
 
-minio:
-  url: http://localhost:9000
-  access-key: root
-  secret-key: dydwls0716
-  bucket: gyeol
 
 jwt:
   secret: "my-super-long-secret-key-that-is-at-least-32-characters"
