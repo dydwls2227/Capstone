@@ -50,6 +50,8 @@ dependencies {
 
     implementation 'io.minio:minio:8.5.2'
 
+
+    testImplementation 'com.h2database:h2'
     // WebFlux
     implementation 'org.springframework.boot:spring-boot-starter-webflux'
 }
