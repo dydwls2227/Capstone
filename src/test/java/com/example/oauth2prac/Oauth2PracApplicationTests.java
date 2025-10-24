@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
-@ActiveProfiles("oauth") // 테스트 실행 시 "oauth" 프로필을 활성화합니다.
+@ActiveProfiles("test") // 테스트 실행 시 "test" 프로필을 활성화합니다.
 @SpringBootTest
 class Oauth2PracApplicationTests {
 
